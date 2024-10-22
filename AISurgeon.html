@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Surgery - Hospital Hallway</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div id="container"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.0/gsap.min.js"></script>
+
+
+
+    <script>
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('container').appendChild(renderer.domElement);
+        
+        // Set the background color of the scene to black
+        scene.background = new THREE.Color(0x000000);
+        
+        // Create the hospital hallway
+        function createHallway() {
+            // Create floor
+            const floorGeometry = new THREE.PlaneGeometry(20, 50);
+            const floorMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc });
+            const floor = new THREE.Mesh(floorGeometry, floorMaterial);
+            floor.rotation.x = -Math.PI / 2; // Rotate to be horizontal
+            floor.position.y = -0.1; // Position the floor slightly below the center
+            scene.add(floor);
+        
+            // Create walls
+            const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xdddddd });
+        
+            const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 5, 50), wallMaterial);
+            leftWall.position.set(-10.1, 2.5, 0);
+            scene.add(leftWall);
+        
+            const rightWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 5, 50), wallMaterial);
+            rightWall.position.set(10.1, 2.5, 0);
+            scene.add(rightWall);
+        
+            // Create ceiling
+            const ceilingMaterial = new THREE.MeshStandardMaterial({ color: 0xaaaaaa });
+            const ceiling = new THREE.Mesh(new THREE.PlaneGeometry(20, 50), ceilingMaterial);
+            ceiling.rotation.x = Math.PI / 2; // Rotate to be horizontal
+            ceiling.position.y = 5; // Position the ceiling above the walls
+            scene.add(ceiling);
+        
+            // Create the wall at the end of the hallway
+            const endWall = new THREE.Mesh(new THREE.BoxGeometry(20.2, 5, 0.2), wallMaterial);
+            endWall.position.set(0, 2.5, -25); // Position the end wall
+            scene.add(endWall);
+        
+            // Create side doors (facing sideways)
+            const doorGeometry = new THREE.BoxGeometry(1, 3, 0.1);
+            const doorMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513 }); // Brown color for doors
+        
+            // Left side door
+            const sideDoor1 = new THREE.Mesh(doorGeometry, doorMaterial);
+            sideDoor1.position.set(-10, 1.5, -12.5); // Position the left side door sideways
+            sideDoor1.rotation.y = Math.PI / 2; // Rotate to face sideways
+            scene.add(sideDoor1);
+        
+            // Right side door
+            const sideDoor2 = new THREE.Mesh(doorGeometry, doorMaterial);
+            sideDoor2.position.set(10, 1.5, -12.5); // Position the right side door sideways
+            sideDoor2.rotation.y = Math.PI / 2; // Rotate to face sideways
+            scene.add(sideDoor2);
+        
+            // Create main doors at the front (centered and wider)
+            const mainDoorWidth = 2; // Updated width of each main door
+            const mainDoorHeight = 3; // Height of each main door
+        
+            // Left main door
+            const mainDoor1 = new THREE.Mesh(new THREE.BoxGeometry(mainDoorWidth, mainDoorHeight, 0.1), doorMaterial);
+            mainDoor1.position.set(-mainDoorWidth / 2 - 0.05, 1.5, -24.9); // Position the first main door slightly in front of the wall
+            mainDoor1.name = "mainDoor1"; // Name for access later
+            scene.add(mainDoor1);
+        
+            // Right main door
+            const mainDoor2 = new THREE.Mesh(new THREE.BoxGeometry(mainDoorWidth, mainDoorHeight, 0.1), doorMaterial);
+            mainDoor2.position.set(mainDoorWidth / 2 + 0.05, 1.5, -24.9); // Position the second main door slightly in front of the wall
+            mainDoor2.name = "mainDoor2"; // Name for access later
+            scene.add(mainDoor2);
+        
+            // Create lights shining from the ceiling
+            const lightGeometry = new THREE.SphereGeometry(0.1, 16, 16);
+            const lightMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            const numberOfLights = 10; // Number of lights in the hallway
+        
+            for (let i = -8; i <= 8; i += 4) {
+                const light = new THREE.Mesh(lightGeometry, lightMaterial);
+                light.position.set(i, 4.5, -15); // Position lights along the ceiling
+                scene.add(light);
+        
+                // Create a glowing effect for lights
+                const glowEffect = new THREE.Mesh(lightGeometry, new THREE.MeshBasicMaterial({ color: 0xffff00, transparent: true, opacity: 0.8 }));
+                glowEffect.position.copy(light.position);
+                scene.add(glowEffect);
+            }
+        }
+         // Create a blinking SURGERY sign above the doorway
+    const signGeometry = new THREE.PlaneGeometry(2, 0.5);
+    const signMaterial = new THREE.MeshStandardMaterial({ color: 0xff0000, transparent: true });
+    const surgerySign = new THREE.Mesh(signGeometry, signMaterial);
+    surgerySign.position.set(0, 3.5, -24.9); // Position above the doorway
+    scene.add(surgerySign);
+
+    // Create blinking effect
+    let blink = true;
+    setInterval(() => {
+        signMaterial.opacity = blink ? 1 : 0; // Toggle opacity
+        blink = !blink;
+    }, 500); // Blink every 500 ms
+
+
+        
+        // Create the hospital hallway
+        createHallway();
+        
+        // Add ambient lighting
+        const ambientLight = new THREE.AmbientLight(0x404040, 1); // Soft white light for better visibility
+        scene.add(ambientLight);
+        const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        directionalLight.position.set(5, 10, 7.5);
+        scene.add(directionalLight);
+
+        
+        
+        // Position the camera
+        camera.position.set(0, 1.5, 5); // Start position of the camera
+        
+        // Animate function
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        
+        // Function to open the doors with animation
+        function openMainDoors() {
+            const mainDoor1 = scene.getObjectByName("mainDoor1");
+            const mainDoor2 = scene.getObjectByName("mainDoor2");
+        
+            if (mainDoor1 && mainDoor2) {
+                // Open doors by moving them outward faster and further
+                gsap.to(mainDoor1.position, { x: -2, duration: 0.3, ease: "power2.inOut" }); // Open mainDoor1 to the left
+                gsap.to(mainDoor2.position, { x: 2, duration: 0.3, ease: "power2.inOut", onComplete: () => {
+                    // Make doors invisible after opening
+                    mainDoor1.visible = false;
+                    mainDoor2.visible = false;
+                }});
+            }
+        }
+        
+        // Start the animation
+        animate();
+        
+        // Function to simulate shaky camera movement
+        function shakeCamera() {
+            // Add shaking effect to the camera's position
+            const shakeX = Math.random() * 0.02 - 0.01; // Random shake in X
+            const shakeY = Math.random() * 0.02 - 0.01; // Random shake in Y
+            camera.position.x += shakeX;
+            camera.position.y += shakeY;
+        }
+        
+        // Walk towards the doors with shaky motion
+        gsap.to(camera.position, {
+            z: -24, // Move the camera closer to the doors
+            duration: 8, // Time taken to reach the doors (human pace)
+            ease: "power2.inOut",
+            onUpdate: shakeCamera, // Apply shaky effect while moving
+            onComplete: () => {
+                openMainDoors(); // Open doors after arriving
+                // Move the camera further into the wall for black background visibility
+                gsap.to(camera.position, { z: -30, duration: 2, ease: "power2.inOut", onComplete: createSurgeryRoom });
+            }
+        });
+        
+        // Create the surgery room
+        function createSurgeryRoom() {
+            // Create surgery room floor
+            const surgeryFloorGeometry = new THREE.PlaneGeometry(20, 20);
+            const surgeryFloorMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc });
+            const surgeryFloor = new THREE.Mesh(surgeryFloorGeometry, surgeryFloorMaterial);
+            surgeryFloor.rotation.x = -Math.PI / 2; // Rotate to be horizontal
+            surgeryFloor.position.y = -0.1; // Position slightly below the center
+            scene.add(surgeryFloor);
+            
+         // Create walls
+    const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xdddddd });
+    
+    const backWall = new THREE.Mesh(new THREE.BoxGeometry(20.2, 5, 0.2), wallMaterial);
+    backWall.position.set(0, 2.5, 10); // Position the back wall
+    scene.add(backWall);
+
+    
+// Create two brown rectangles for the doors integrated into the back wall
+const doorGeometry = new THREE.BoxGeometry(1.5, 3, 0.3); // Thicker doors for visibility
+const doorMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513 }); // Brown color for doors
+
+
+
+    
+    const leftWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 5, 20), wallMaterial);
+    leftWall.position.set(-10.1, 2.5, 0); // Position the left wall
+    scene.add(leftWall);
+
+    const rightWall = new THREE.Mesh(new THREE.BoxGeometry(0.2, 5, 20), wallMaterial);
+    rightWall.position.set(10.1, 2.5, 0); // Position the right wall
+    scene.add(rightWall);
+
+    
+    
+    // No black wall is created, ensuring visibility of all other walls.
+
+            // Create cabinets
+            const cabinetGeometry = new THREE.BoxGeometry(2, 2, 0.5);
+            const cabinetMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513 }); // Brown color for cabinets
+        
+            // Create multiple cabinets
+            const cabinets = [
+                { position: [-6, 1, -6] },
+                { position: [-8, 1, -6] },
+                { position: [6, 1, -6] },
+                { position: [8, 1, -6] },
+                { position: [0, 1, -8] } // Add a cabinet at the back
+            ];
+        
+            cabinets.forEach(cabinet => {
+                const cabinetMesh = new THREE.Mesh(cabinetGeometry, cabinetMaterial);
+                cabinetMesh.position.set(...cabinet.position);
+                scene.add(cabinetMesh);
+            });
+        
+            // Create wheeled cart
+            const cartGeometry = new THREE.BoxGeometry(1, 0.5, 0.5);
+            const cartMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 }); // Gray color for cart
+            const cart = new THREE.Mesh(cartGeometry, cartMaterial);
+            cart.position.set(0, 0.25, -4); // Position of the cart
+            scene.add(cart);
+        
+            // Create operating table
+            const tableGeometry = new THREE.BoxGeometry(4, 0.5, 2); // Dimensions for the operating table
+            const tableMaterial = new THREE.MeshStandardMaterial({ color: 0xFFFFFF }); // White color for table
+            const operationTable = new THREE.Mesh(tableGeometry, tableMaterial);
+            operationTable.position.set(0, 0.5, -1); // Position of the operating table
+            operationTable.rotation.x = Math.PI / 6; // Slant the table towards the person
+            scene.add(operationTable);
+        
+            // Create surgical lights
+            const lightGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+            const lightMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+            const surgicalLight1 = new THREE.Mesh(lightGeometry, lightMaterial);
+            surgicalLight1.position.set(-3, 4, -1); // Position of the first surgical light
+            scene.add(surgicalLight1);
+        
+            const surgicalLight2 = new THREE.Mesh(lightGeometry, lightMaterial);
+            surgicalLight2.position.set(3, 4, -1); // Position of the second surgical light
+            scene.add(surgicalLight2);
+        
+            // Create lights shining from the ceiling
+            const numberOfSurgicalLights = 6; // Number of surgical lights in the room
+            for (let i = -5; i <= 5; i += 5) {
+                const surgicalLight = new THREE.Mesh(lightGeometry, lightMaterial);
+                surgicalLight.position.set(i, 5, -3); // Position lights along the ceiling
+                scene.add(surgicalLight);
+        
+                // Create a glowing effect for surgical lights
+                const glowEffect = new THREE.Mesh(lightGeometry, new THREE.MeshBasicMaterial({ color: 0xffff00, transparent: true, opacity: 0.8 }));
+                glowEffect.position.copy(surgicalLight.position);
+                scene.add(glowEffect);
+
+                
+            }
+        
+            // Position the camera in the surgery room
+            camera.position.set(0, 2, 5); // Adjusted position for the surgery room
+
+            
+// Function to create a human-like shaky effect
+function addHumanShakyEffect(intensity) {
+    const shakeX = (Math.random() - 0.5) * intensity * 0.1; // Reduced intensity for realism
+    const shakeY = (Math.random() - 0.5) * intensity * 0.1; // Reduced intensity for realism
+    const shakeZ = (Math.random() - 0.5) * intensity * 0.1; // Reduced intensity for realism
+
+    // Apply shake to the camera position
+    camera.position.x += shakeX;
+    camera.position.y += shakeY;
+    camera.position.z += shakeZ;
+}
+
+// Function to simulate natural walking motion
+function walkTowardsTable(step) {
+    const randomOffset = (Math.random() - 0.5) * 0.02; // Slight lateral movement
+    const bobbingMotion = Math.sin(Date.now() * 0.01) * 0.01; // Simulate bobbing as walking
+    camera.position.z -= step; // Move forward
+    camera.position.x += randomOffset; // Slight left/right movement
+    camera.position.y += bobbingMotion; // Add bobbing to simulate walking
+}
+
+// Function to rotate the camera with a more dynamic human-like motion
+function rotateCamera(targetAngle, duration) {
+    const startAngle = camera.rotation.y;
+    const angleStep = (targetAngle - startAngle) / (duration / 50); // Divide the rotation into steps
+
+    let currentAngle = startAngle;
+    let steps = 0;
+
+    const rotationInterval = setInterval(() => {
+        if (steps < duration / 50) {
+            currentAngle += angleStep;
+            camera.rotation.y = currentAngle + (Math.random() - 0.5) * 0.02; // Add randomness
+            addHumanShakyEffect(0.03); // Slightly increased shake for more human-like motion
+            steps++;
+        } else {
+            clearInterval(rotationInterval);
+        }
+    }, 50);
+}
+
+// Function to lower the camera into a lying down position at an upward angle with human-like motion
+function lieDown(duration) {
+    const originalY = camera.position.y;
+    const targetY = originalY + 0.5; // Slightly raise the camera to simulate lying down at an upward angle
+
+    const angleOffset = -Math.PI / 8; // Upward angle for lying down
+    const targetRotationX = camera.rotation.x + angleOffset; // Rotate backward slightly
+
+    const yStep = (targetY - originalY) / (duration / 50);
+    let steps = 0;
+
+    const lyingDownInterval = setInterval(() => {
+        if (steps < duration / 50) {
+            camera.position.y += yStep; // Raise the camera slightly
+            camera.rotation.x += angleOffset / (duration / 50); // Gradually rotate the camera upward
+            addHumanShakyEffect(0.03); // Add shake effect for realism
+            steps++;
+        } else {
+            clearInterval(lyingDownInterval);
+        }
+    }, 50);
+}
+
+// Sequence of movements with enhanced realism
+function performSequence() {
+    // Adjust the distance to the table for a more human-like movement
+    const approachDistance = 5; // Reduced distance to the operation table
+    const stepsToTable = 100; // More steps for a slower approach
+
+    for (let i = 0; i < stepsToTable; i++) {
+        setTimeout(() => {
+            walkTowardsTable(approachDistance / stepsToTable); // Move towards the operation table
+            addHumanShakyEffect(0.03); // Slight shake effect for realism
+        }, i * 25); // Adjust delay for smoother, slower movement
+    }
+
+    // Wait until reaching the table
+    setTimeout(() => {
+        // Turn around with a human-like motion
+        rotateCamera(Math.PI, 3000); // 180 degrees turn in 3 seconds
+    }, (stepsToTable * 25) + 500); // Wait for approaching to finish
+
+    // Wait until rotation is complete
+    setTimeout(() => {
+        // Lie down at an upward angle
+        lieDown(1500); // Take 1.5 seconds to lie down
+    }, 3500); // Wait for the turn to complete
+}
+
+// Call the sequence function to execute
+performSequence();
+
+
+            
+        }
+        
+ // Create surgery lights
+ const surgeryLightGeometry = new THREE.SphereGeometry(0.2, 16, 16);
+ const surgeryLightMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
+ const surgeryLight = new THREE.Mesh(surgeryLightGeometry, surgeryLightMaterial);
+ surgeryLight.position.set(0, 4.5, -5); // Position above the surgery table
+ scene.add(surgeryLight);
+
+ // Create a glowing effect for the surgery light
+ const surgeryGlowEffect = new THREE.Mesh(surgeryLightGeometry, new THREE.MeshBasicMaterial({ color: 0xffff00, transparent: true, opacity: 0.8 }));
+ surgeryGlowEffect.position.copy(surgeryLight.position);
+ scene.add(surgeryGlowEffect);
+
+ 
+
+
+// Start the animation
+animate();
+
+
+
+
+    </script>
+</body>
+</html>

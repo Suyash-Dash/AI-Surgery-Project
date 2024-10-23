@@ -72,6 +72,13 @@
             sideDoor2.position.set(10, 1.5, -12.5); // Position the right side door sideways
             sideDoor2.rotation.y = Math.PI / 2; // Rotate to face sideways
             scene.add(sideDoor2);
+
+    
+
+
+
+
+
         
             // Create main doors at the front (centered and wider)
             const mainDoorWidth = 2; // Updated width of each main door
@@ -83,11 +90,40 @@
             mainDoor1.name = "mainDoor1"; // Name for access later
             scene.add(mainDoor1);
         
-            // Right main door
-            const mainDoor2 = new THREE.Mesh(new THREE.BoxGeometry(mainDoorWidth, mainDoorHeight, 0.1), doorMaterial);
-            mainDoor2.position.set(mainDoorWidth / 2 + 0.05, 1.5, -24.9); // Position the second main door slightly in front of the wall
-            mainDoor2.name = "mainDoor2"; // Name for access later
-            scene.add(mainDoor2);
+          // Right main door
+          const mainDoor2 = new THREE.Mesh(new THREE.BoxGeometry(mainDoorWidth, mainDoorHeight, 0.1), doorMaterial);
+          mainDoor2.position.set(mainDoorWidth / 2 + 0.05, 1.5, -24.9); // Position the second main door slightly in front of the wall
+          mainDoor2.name = "mainDoor2"; // Name for access later
+          scene.add(mainDoor2);
+
+           // Back main door
+        const mainDoor3 = new THREE.Mesh(new THREE.BoxGeometry(mainDoorWidth, mainDoorHeight, 0.1), doorMaterial);
+        mainDoor3.position.set(-mainDoorWidth / 2 - 0.05, 1.5, 7.8); // Position the second main door slightly in front of the wall
+        mainDoor3.name = "mainDoor3"; // Name for access later
+        scene.add(mainDoor3);
+
+        // Back main door
+        const mainDoor4 = new THREE.Mesh(new THREE.BoxGeometry(mainDoorWidth, mainDoorHeight, 0.1), doorMaterial);
+        mainDoor4.position.set(mainDoorWidth / 2 + 0.05, 1.5, 7.8); // Position the second main door slightly in front of the wall
+        mainDoor4.name = "mainDoor4"; // Name for access later
+        scene.add(mainDoor4);
+
+        // Create TV
+        const tvGeometry = new THREE.PlaneGeometry(3, 2);
+        const tvMaterial = new THREE.MeshStandardMaterial({ color: 0x000000 });
+        const tv = new THREE.Mesh(tvGeometry, tvMaterial);
+
+        // Position the TV like a door but sideways
+        tv.position.set(5.5, 3.5, 7.8); // Same position as before
+
+        // Rotate to make it face sideways (like a door)
+        tv.rotation.y = Math.PI; // Rotate to face sideways
+        tv.name = "tv"; // Name for access later
+
+        scene.add(tv);
+
+
+
         
             // Create lights shining from the ceiling
             const lightGeometry = new THREE.SphereGeometry(0.1, 16, 16);
@@ -154,6 +190,8 @@
                     // Make doors invisible after opening
                     mainDoor1.visible = false;
                     mainDoor2.visible = false;
+                    surgerySign.visible = false;
+
                 }});
             }
         }
@@ -185,6 +223,10 @@
         
         // Create the surgery room
         function createSurgeryRoom() {
+
+
+
+            
             // Create surgery room floor
             const surgeryFloorGeometry = new THREE.PlaneGeometry(20, 20);
             const surgeryFloorMaterial = new THREE.MeshStandardMaterial({ color: 0xcccccc });
@@ -192,6 +234,9 @@
             surgeryFloor.rotation.x = -Math.PI / 2; // Rotate to be horizontal
             surgeryFloor.position.y = -0.1; // Position slightly below the center
             scene.add(surgeryFloor);
+
+           
+            
             
          // Create walls
     const wallMaterial = new THREE.MeshStandardMaterial({ color: 0xdddddd });
@@ -200,10 +245,12 @@
     backWall.position.set(0, 2.5, 10); // Position the back wall
     scene.add(backWall);
 
+
     
-// Create two brown rectangles for the doors integrated into the back wall
-const doorGeometry = new THREE.BoxGeometry(1.5, 3, 0.3); // Thicker doors for visibility
-const doorMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513 }); // Brown color for doors
+
+    
+
+
 
 
 
@@ -216,6 +263,7 @@ const doorMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513 }); // Bro
     rightWall.position.set(10.1, 2.5, 0); // Position the right wall
     scene.add(rightWall);
 
+    
     
     
     // No black wall is created, ensuring visibility of all other walls.
@@ -239,6 +287,10 @@ const doorMaterial = new THREE.MeshStandardMaterial({ color: 0x8B4513 }); // Bro
                 scene.add(cabinetMesh);
             });
         
+
+
+
+
             // Create wheeled cart
             const cartGeometry = new THREE.BoxGeometry(1, 0.5, 0.5);
             const cartMaterial = new THREE.MeshStandardMaterial({ color: 0x808080 }); // Gray color for cart

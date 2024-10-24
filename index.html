@@ -400,10 +400,13 @@ function lieDown(duration) {
     }, 50);
 }
 
+
+
+
 // Sequence of movements with enhanced realism
 function performSequence() {
     // Adjust the distance to the table for a more human-like movement
-    const approachDistance = 5; // Reduced distance to the operation table
+    const approachDistance = 3.7; // Reduced distance to the operation table
     const stepsToTable = 100; // More steps for a slower approach
 
     for (let i = 0; i < stepsToTable; i++) {
@@ -424,10 +427,67 @@ function performSequence() {
         // Lie down at an upward angle
         lieDown(1500); // Take 1.5 seconds to lie down
     }, 3500); // Wait for the turn to complete
+
+
+    // Zoom in after the sequence
+    setTimeout(() => {
+        zoomIn(); // Zoom in at the end for dramatic effect
+    }, 6650); // Trigger the zoom after lying down is complete
+    
 }
+
+// Function to animate zooming in towards a specific direction
+function zoomIn(zoomLevel = 30) { // Default zoom level set to 30
+    // Store the current camera position
+    const originalPosition = camera.position.clone();
+
+    // Define the distance to move the camera forward and the target direction angle
+    const distance = 7; // Adjust this distance as necessary
+    const directionAngle = Math.PI / 4; // 45 degrees in radians
+
+    // Calculate the target position based on the angle
+    const targetPosition = new THREE.Vector3(
+        originalPosition.x + distance * Math.cos(directionAngle),
+        originalPosition.y, // Keep the original y position
+        originalPosition.z + distance * Math.sin(directionAngle)
+    );
+
+    // Animate the camera's position towards the target position
+    gsap.to(camera.position, {
+        x: targetPosition.x,
+        y: targetPosition.y,
+        z: targetPosition.z,
+        duration: 6, // Duration of the transition
+        ease: "power2.inOut",
+        onUpdate: () => {
+            camera.updateProjectionMatrix(); // Update the camera projection
+        }
+    });
+
+    // Animate the camera's field of view (FOV) to zoom in
+    gsap.to(camera, {
+        fov: zoomLevel, // Use the zoomLevel parameter to control zoom
+        duration: 7, // Duration of the zoom effect
+        ease: "power2.inOut",
+        onUpdate: () => {
+            camera.updateProjectionMatrix(); // Update the camera projection after modifying FOV
+        }
+    });
+}
+
+
+// Call the zoomIn function after a delay with a specified zoom level
+setTimeout(() => {
+    zoomIn(50); // You can change this value to adjust the zoom level
+}, 5000); // Wait for 5 seconds before starting the zoom
+
+
 
 // Call the sequence function to execute
 performSequence();
+
+
+
 
 
             
@@ -444,6 +504,9 @@ performSequence();
  const surgeryGlowEffect = new THREE.Mesh(surgeryLightGeometry, new THREE.MeshBasicMaterial({ color: 0xffff00, transparent: true, opacity: 0.8 }));
  surgeryGlowEffect.position.copy(surgeryLight.position);
  scene.add(surgeryGlowEffect);
+
+ 
+
 
  
 

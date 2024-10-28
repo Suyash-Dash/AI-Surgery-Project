@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AI Surgery - Hospital Hallway</title>
-    <link rel="stylesheet" href="styles.css">
+    
 </head>
 <body>
     <div id="container"></div>
@@ -430,10 +430,25 @@ function performSequence() {
 
 
     // Zoom in after the sequence
+
+    
     setTimeout(() => {
         zoomIn(); // Zoom in at the end for dramatic effect
-    }, 6650); // Trigger the zoom after lying down is complete
+   
+}, 6650); // Trigger the zoom after lying down is complete
+
+
+    // Zoom in after the sequence
+setTimeout(() => {
+    // Wait for a specified duration before zooming in
+    setTimeout(() => {
+        transitionToNewPage(); // Zoom in at the end for dramatic effect
+    }, 5000); // Adjust this duration as needed (e.g., 1000 ms for 1 second)
+}, 6650); // Trigger the zoom after lying down is complete
+   
     
+
+
 }
 
 // Function to animate zooming in towards a specific direction
@@ -467,19 +482,37 @@ function zoomIn(zoomLevel = 30) { // Default zoom level set to 30
     // Animate the camera's field of view (FOV) to zoom in
     gsap.to(camera, {
         fov: zoomLevel, // Use the zoomLevel parameter to control zoom
-        duration: 7, // Duration of the zoom effect
+        duration: 8, // Duration of the zoom effect
         ease: "power2.inOut",
         onUpdate: () => {
             camera.updateProjectionMatrix(); // Update the camera projection after modifying FOV
+            
         }
     });
+
+   
+
+    
+
+
+
+}
+
+// Function to transition to the new page
+function transitionToNewPage() {
+    // Fade out the entire scene
+    gsap.to('#container', { opacity: 0, duration: 1, onComplete: () => {
+        // After the fade-out completes, change the page
+        window.location.href = 'AISurgPresent.html';
+    }});
 }
 
 
 // Call the zoomIn function after a delay with a specified zoom level
 setTimeout(() => {
-    zoomIn(50); // You can change this value to adjust the zoom level
+    
 }, 5000); // Wait for 5 seconds before starting the zoom
+
 
 
 
@@ -489,10 +522,10 @@ performSequence();
 
 
 
-
             
         }
-        
+    
+
  // Create surgery lights
  const surgeryLightGeometry = new THREE.SphereGeometry(0.2, 16, 16);
  const surgeryLightMaterial = new THREE.MeshStandardMaterial({ color: 0xffffff });
@@ -513,6 +546,10 @@ performSequence();
 
 // Start the animation
 animate();
+
+
+
+
 
 
 

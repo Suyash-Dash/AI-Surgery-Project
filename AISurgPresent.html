@@ -156,18 +156,18 @@
             showSlide(currentSlide);
         }
 
-        // Control with arrow keys
+        // Control with arrow keys and common clicker keys
         document.addEventListener('keydown', (event) => {
             switch (event.key) {
                 case 'ArrowRight':
+                case 'PageDown':
+                case ' ':
+                case 'Enter':
                     nextSlide();
                     break;
                 case 'ArrowLeft':
+                case 'PageUp':
                     prevSlide();
-                    break;
-                case ' ':
-                case 'Enter': // Allows advancing slides with the spacebar or Enter key
-                    nextSlide();
                     break;
             }
         });

@@ -18,41 +18,31 @@
             font-size: 40px;
             font-weight: bold;
             margin-bottom: 15px;
-            color: #87CEFA; /* Lighter neon blue */
-            text-shadow: 0 0 15px #87CEFA, 0 0 25px #87CEFA, 0 0 35px #ffffff; /* Enhanced glow */
+            color: #87CEFA;
+            text-shadow: 0 0 15px #87CEFA, 0 0 25px #87CEFA, 0 0 35px #ffffff;
             animation: titleAnimation 1s ease-in-out forwards;
         }
 
         .slide-content {
             text-align: left;
             font-size: 24px;
-            color: #00bfff; /* Darker blue for bullet points */
-            text-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff; /* Neon blue glow */
+            color: #00bfff;
+            text-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff;
         }
 
         @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+            from { opacity: 0; }
+            to { opacity: 1; }
         }
 
         @keyframes titleAnimation {
-            0% {
-                transform: translateY(-20px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            0% { transform: translateY(-20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
 
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0c1f33, #2a374b); /* Dark blue gradient */
+            background: linear-gradient(135deg, #0c1f33, #2a374b);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -62,45 +52,38 @@
         }
 
         .slide-container {
-            width: 70%; /* Increased width for better visibility */
+            width: 70%;
             position: relative;
             overflow: hidden;
-            background-color: rgba(10, 10, 10, 0.9); /* Dark background for contrast */
-            border-radius: 20px; /* Slightly rounded corners */
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8); /* More pronounced shadow */
+            background-color: rgba(10, 10, 10, 0.9);
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
             padding: 30px;
             animation: slideIn 0.5s ease-in-out;
-            backdrop-filter: blur(10px); /* Adding a blur effect to the background */
+            backdrop-filter: blur(10px);
         }
 
         @keyframes slideIn {
-            0% {
-                transform: translateY(50px);
-                opacity: 0;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 1;
-            }
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
         }
 
         ul {
-            list-style-type: none; /* Remove default bullet points */
+            list-style-type: none;
             padding: 0;
         }
 
         li {
-            margin: 10px 0; /* Space between bullet points */
-            font-size: 22px; /* Font size for bullet points */
-            line-height: 1.5; /* Increase line spacing for better readability */
+            margin: 10px 0;
+            font-size: 22px;
+            line-height: 1.5;
         }
 
-        /* New CSS class for decorative elements */
         .decorative-line {
             height: 5px;
-            background: linear-gradient(to right, #87CEFA, #00bfff); /* Gradient line */
-            margin: 20px 0; /* Space around decorative line */
-            border-radius: 10px; /* Rounded edges for the line */
+            background: linear-gradient(to right, #87CEFA, #00bfff);
+            margin: 20px 0;
+            border-radius: 10px;
         }
     </style>
 </head>
@@ -108,7 +91,7 @@
     <div class="slide-container">
         <div class="slide" id="slide-1">
             <div class="slide-title">AI Surgery: The Future of Medicine</div>
-            <div class="decorative-line"></div> <!-- Decorative line -->
+            <div class="decorative-line"></div>
             <ul class="slide-content">
                 <li>Utilizing AI for precise diagnostics</li>
                 <li>Enhancing surgical procedures with robotics</li>
@@ -117,7 +100,7 @@
         </div>
         <div class="slide" id="slide-2">
             <div class="slide-title">Key Technologies in AI Surgery</div>
-            <div class="decorative-line"></div> <!-- Decorative line -->
+            <div class="decorative-line"></div>
             <ul class="slide-content">
                 <li>Machine Learning Algorithms</li>
                 <li>Robotic Surgical Systems</li>
@@ -126,7 +109,7 @@
         </div>
         <div class="slide" id="slide-3">
             <div class="slide-title">Challenges and Considerations</div>
-            <div class="decorative-line"></div> <!-- Decorative line -->
+            <div class="decorative-line"></div>
             <ul class="slide-content">
                 <li>Ethical implications of AI in healthcare</li>
                 <li>Data security and patient privacy</li>
@@ -156,20 +139,36 @@
             showSlide(currentSlide);
         }
 
-        // Control with arrow keys and common clicker keys
+        // Control with arrow keys, common clicker keys, and mouse buttons
         document.addEventListener('keydown', (event) => {
             switch (event.key) {
                 case 'ArrowRight':
                 case 'PageDown':
                 case ' ':
                 case 'Enter':
+                case 'End':
                     nextSlide();
                     break;
                 case 'ArrowLeft':
                 case 'PageUp':
+                case 'Home':
                     prevSlide();
                     break;
             }
+        });
+
+        // Add event listener for mouse buttons
+        document.addEventListener('mouseup', (event) => {
+            if (event.button === 0) { // Left-click
+                nextSlide();
+            } else if (event.button === 2) { // Right-click
+                prevSlide();
+            }
+        });
+
+        // Prevent context menu from appearing on right-click
+        document.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
         });
 
         // Show the first slide initially

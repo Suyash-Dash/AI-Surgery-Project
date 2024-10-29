@@ -158,10 +158,17 @@
 
         // Control with arrow keys
         document.addEventListener('keydown', (event) => {
-            if (event.key === 'ArrowRight') {
-                nextSlide();
-            } else if (event.key === 'ArrowLeft') {
-                prevSlide();
+            switch (event.key) {
+                case 'ArrowRight':
+                    nextSlide();
+                    break;
+                case 'ArrowLeft':
+                    prevSlide();
+                    break;
+                case ' ':
+                case 'Enter': // Allows advancing slides with the spacebar or Enter key
+                    nextSlide();
+                    break;
             }
         });
 

@@ -81,3 +81,260 @@ li {
         opacity: 1;
     }
 }
+
+
+/* Body background with smooth animated gradient */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0c1f33, #2a374b, #0c1f33);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: white;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 3D effect and neon glow for the title */
+        .slide-title {
+            font-size: 42px;
+            font-weight: bold;
+            color: #00e0ff;
+            text-shadow: 0 0 20px #00e0ff, 0 0 30px #00e0ff, 0 0 40px #ffffff;
+            animation: title3DAnimation 1.2s ease forwards;
+            transform-style: preserve-3d;
+            perspective: 500px;
+            transition: transform 0.5s;
+        }
+
+        /* Decorative 3D effect on hover for title */
+        .slide-title:hover {
+            transform: rotateX(15deg) rotateY(15deg);
+        }
+
+        @keyframes title3DAnimation {
+            0% { transform: translateY(-30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Slide container with 3D effect and neon outline */
+        .slide-container {
+            width: 75%;
+            max-width: 1800px;
+            position: relative;
+            background-color: rgba(10, 10, 10, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.3), 0 0 40px rgba(0, 224, 255, 0.5);
+            animation: container3DAnimation 0.8s ease-in-out;
+            backdrop-filter: blur(15px);
+        }
+
+        @keyframes container3DAnimation {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .slide {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Text content with neon glow */
+        .slide-content {
+            font-size: 24px;
+            color: #00bfff;
+            text-shadow: 0 0 8px #00bfff, 0 0 12px #00bfff;
+            line-height: 1.5;
+            margin-top: 15px;
+            transform: translateZ(0);
+        }
+
+        .decorative-line {
+            height: 5px;
+            background: linear-gradient(to right, #87CEFA, #00bfff);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px #87CEFA, 0 0 20px #00bfff;
+            animation: decorativeLineGlow 2s ease infinite;
+        }
+
+        @keyframes decorativeLineGlow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 22px;
+            line-height: 1.6;
+        }
+
+        /* Slide navigation and animation for smooth transitions */
+        .slide-navigation {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+        .nav-button {
+            cursor: pointer;
+            padding: 10px 20px;
+            border: none;
+            background-color: #00bfff;
+            color: white;
+            font-size: 18px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #00bfff;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .nav-button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px #00bfff, 0 0 30px #00bfff;
+        }
+
+         /* Body background with smooth animated gradient */
+         body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #0c1f33, #2a374b, #0c1f33);
+            background-size: 400% 400%;
+            animation: gradientAnimation 10s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            color: white;
+        }
+
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* 3D effect and neon glow for the title */
+        .slide-title {
+            font-size: 42px;
+            font-weight: bold;
+            color: #00e0ff;
+            text-shadow: 0 0 20px #00e0ff, 0 0 30px #00e0ff, 0 0 40px #ffffff;
+            animation: title3DAnimation 1.2s ease forwards;
+            transform-style: preserve-3d;
+            perspective: 500px;
+            transition: transform 0.5s;
+        }
+
+        /* Decorative 3D effect on hover for title */
+        .slide-title:hover {
+            transform: rotateX(15deg) rotateY(15deg);
+        }
+
+        @keyframes title3DAnimation {
+            0% { transform: translateY(-30px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Slide container with 3D effect and neon outline */
+        .slide-container {
+            width: 75%;
+            max-width: 11700px;
+            
+            position: relative;
+            background-color: rgba(10, 10, 10, 0.85);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0, 224, 255, 0.3), 0 0 40px rgba(0, 224, 255, 0.5);
+            animation: container3DAnimation 0.8s ease-in-out;
+            backdrop-filter: blur(15px);
+        }
+
+        @keyframes container3DAnimation {
+            0% { transform: translateY(50px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .slide {
+            display: none;
+            text-align: center;
+            padding: 20px;
+            animation: fadeIn 0.5s ease;
+        }
+
+        /* Text content with neon glow */
+        .slide-content {
+            font-size: 24px;
+            color: #00bfff;
+            text-shadow: 0 0 8px #00bfff, 0 0 12px #00bfff;
+            line-height: 1.5;
+            margin-top: 15px;
+            transform: translateZ(0);
+        }
+
+        .decorative-line {
+            height: 5px;
+            background: linear-gradient(to right, #87CEFA, #00bfff);
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 0 10px #87CEFA, 0 0 20px #00bfff;
+            animation: decorativeLineGlow 2s ease infinite;
+        }
+
+        @keyframes decorativeLineGlow {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 10px 0;
+            font-size: 22px;
+            line-height: 1.6;
+        }
+
+        /* Slide navigation and animation for smooth transitions */
+        .slide-navigation {
+            position: absolute;
+            top: 50%;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            transform: translateY(-50%);
+        }
+
+     

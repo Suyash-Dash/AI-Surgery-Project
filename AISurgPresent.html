@@ -3,119 +3,164 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="ArtSurgeon.css">
-    <title>Slide Presentation</title>
+    <title>AI Surgery Presentation</title>
     <style>
-        /* Inline styles for JavaScript functionality */
-        .slide {
-            display: none;
-            padding: 20px;
-            text-align: center;
-            animation: fadeIn 0.5s;
-        }
-
-        .slide-title {
-            font-size: 40px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            color: #87CEFA;
-            text-shadow: 0 0 15px #87CEFA, 0 0 25px #87CEFA, 0 0 35px #ffffff;
-            animation: titleAnimation 1s ease-in-out forwards;
-        }
-
-        .slide-content {
-            text-align: left;
-            font-size: 24px;
-            color: #00bfff;
-            text-shadow: 0 0 5px #00bfff, 0 0 10px #00bfff;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes titleAnimation {
-            0% { transform: translateY(-20px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
-        }
-
-        body {
-            font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #0c1f33, #2a374b);
+        /* Fullscreen layout and background animation */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            background: radial-gradient(circle at center, #0a1623, #1a2838);
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
-            margin: 0;
-            overflow: hidden;
+            color: #e0f7ff;
+            font-family: 'Arial', sans-serif;
+            animation: backgroundShift 12s ease infinite;
+        }
+
+        @keyframes backgroundShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
         }
 
         .slide-container {
-            width: 70%;
-            position: relative;
-            overflow: hidden;
-            background-color: rgba(10, 10, 10, 0.9);
+            width: 88vw;
+            height: 88vh;
+            perspective: 1200px;
             border-radius: 20px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.8);
-            padding: 30px;
-            animation: slideIn 0.5s ease-in-out;
-            backdrop-filter: blur(10px);
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            background: rgba(10, 10, 20, 0.9);
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+            animation: containerFade 1.5s ease forwards;
+        }
+
+        @keyframes containerFade {
+            from { transform: scale(0.9); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .slide {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            animation: fadeInOut 1.8s ease;
+        }
+
+        .slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: brightness(0.92) contrast(1.1) saturate(1.3);
+            transition: transform 1.2s ease-in-out;
+            transform: scale(1.02);
+        }
+
+        .slide.fade-in {
+            display: block;
+            animation: slideIn 1.2s ease forwards;
+        }
+
+        .slide.fade-out {
+            display: block;
+            animation: slideOut 1.2s ease forwards;
         }
 
         @keyframes slideIn {
-            0% { transform: translateY(50px); opacity: 0; }
-            100% { transform: translateY(0); opacity: 1; }
+            from { transform: rotateY(40deg) scale(0.95); opacity: 0; }
+            to { transform: rotateY(0deg) scale(1); opacity: 1; }
         }
 
-        ul {
-            list-style-type: none;
-            padding: 0;
+        @keyframes slideOut {
+            from { transform: rotateY(0deg); opacity: 1; }
+            to { transform: rotateY(-40deg); opacity: 0; }
         }
 
-        li {
-            margin: 10px 0;
-            font-size: 22px;
-            line-height: 1.5;
+        /* Enhanced neon and glow effects */
+        .neon-effect {
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4), 0 0 50px rgba(0, 255, 255, 0.2);
+            animation: neonGlow 2s ease-in-out infinite alternate;
         }
 
-        .decorative-line {
-            height: 5px;
-            background: linear-gradient(to right, #87CEFA, #00bfff);
-            margin: 20px 0;
-            border-radius: 10px;
+        @keyframes neonGlow {
+            0% { box-shadow: 0 0 15px rgba(0, 255, 255, 0.5), 0 0 30px rgba(0, 255, 255, 0.3); }
+            100% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.8), 0 0 60px rgba(0, 255, 255, 0.5); }
+        }
+
+        /* Text styling for readability */
+        h1, p {
+            text-align: center;
+            font-weight: 300;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
         }
     </style>
 </head>
 <body>
     <div class="slide-container">
-        <div class="slide" id="slide-1">
-            <div class="slide-title">AI Surgery: The Future of Medicine</div>
-            <div class="decorative-line"></div>
-            <ul class="slide-content">
-                <li>Utilizing AI for precise diagnostics</li>
-                <li>Enhancing surgical procedures with robotics</li>
-                <li>Improving patient outcomes and recovery</li>
-            </ul>
+        <!-- Slide 1 -->
+        <div class="slide fade-in" id="slide-1">
+            <img src="Robotics1.png" alt="Slide 1 Image" class="neon-effect">
         </div>
+        <!-- Slide 2 -->
         <div class="slide" id="slide-2">
-            <div class="slide-title">Key Technologies in AI Surgery</div>
-            <div class="decorative-line"></div>
-            <ul class="slide-content">
-                <li>Machine Learning Algorithms</li>
-                <li>Robotic Surgical Systems</li>
-                <li>Real-time Data Analytics</li>
-            </ul>
+            <img src="Robotics2.png" alt="Slide 2 Image" class="neon-effect">
         </div>
+        <!-- Slide 3 -->
         <div class="slide" id="slide-3">
-            <div class="slide-title">Challenges and Considerations</div>
-            <div class="decorative-line"></div>
-            <ul class="slide-content">
-                <li>Ethical implications of AI in healthcare</li>
-                <li>Data security and patient privacy</li>
-                <li>Training and adapting medical professionals</li>
-            </ul>
+            <img src="Robotics3.png" alt="Slide 3 Image" class="neon-effect">
         </div>
+
+        <!-- Slide 4 -->
+        <div class="slide" id="slide-4">
+            <img src="Robotics4.png" alt="Slide 4 Image" class="neon-effect">
+        </div>
+
+        <!-- Slide 5 -->
+        <div class="slide" id="slide-5">
+            <img src="Robotics5.png" alt="Slide 5 Image" class="neon-effect">
+        </div>
+
+        <!-- Slide 6 -->
+        <div class="slide" id="slide-6">
+            <img src="Robotics6.png" alt="Slide 6 Image" class="neon-effect">
+        </div>
+
+        <!-- Slide 7 -->
+        <div class="slide" id="slide-7">
+            <img src="Robotics7.png" alt="Slide 7 Image" class="neon-effect">
+        </div>
+
+        <!-- Slide 8 -->
+        <div class="slide" id="slide-8">
+            <img src="Robotics8.png" alt="Slide 8 Image" class="neon-effect">
+        </div>
+
+        <!-- Slide 9 -->
+        <div class="slide" id="slide-9">
+            <img src="Robotics9.png" alt="Slide 9 Image" class="neon-effect">
+        </div>
+
+        <!-- Slide 10 -->
+        <div class="slide" id="slide-10">
+            <img src="Robotics10.png" alt="Slide 10 Image" class="neon-effect">
+        </div>
+
+        <!-- Slide 11 -->
+        <div class="slide" id="slide-11">
+            <img src="Robotics11.png" alt="Slide 11 Image" class="neon-effect">
+        </div>
+
+        <!-- Slide 12 -->
+        <div class="slide" id="slide-12">
+            <img src="Robotics12.png" alt="Slide 12 Image" class="neon-effect">
+        </div>
+
     </div>
 
     <script>
@@ -125,7 +170,12 @@
 
         function showSlide(index) {
             slides.forEach((slide, i) => {
-                slide.style.display = (i === index) ? 'block' : 'none';
+                slide.classList.remove('fade-in', 'fade-out');
+                if (i === index) {
+                    slide.classList.add('fade-in');
+                } else {
+                    slide.classList.add('fade-out');
+                }
             });
         }
 
@@ -134,45 +184,33 @@
             showSlide(currentSlide);
         }
 
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            showSlide(currentSlide);
-        }
+        // Display initial slide
+        showSlide(currentSlide);
 
-        // Control with arrow keys, common clicker keys, and mouse buttons
+        // Slide controls with keyboard and mouse
         document.addEventListener('keydown', (event) => {
-            switch (event.key) {
-                case 'ArrowRight':
-                case 'PageDown':
-                case ' ':
-                case 'Enter':
-                case 'End':
-                    nextSlide();
-                    break;
-                case 'ArrowLeft':
-                case 'PageUp':
-                case 'Home':
-                    prevSlide();
-                    break;
+            if (['ArrowRight', 'PageDown', ' ', 'Enter', 'End'].includes(event.key)) {
+                nextSlide();
+            } else if (['ArrowLeft', 'PageUp', 'Home'].includes(event.key)) {
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                showSlide(currentSlide);
             }
         });
 
-        // Add event listener for mouse buttons
+        // Mouse click control
         document.addEventListener('mouseup', (event) => {
             if (event.button === 0) { // Left-click
                 nextSlide();
             } else if (event.button === 2) { // Right-click
-                prevSlide();
+                currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+                showSlide(currentSlide);
             }
         });
 
-        // Prevent context menu from appearing on right-click
+        // Prevent right-click menu
         document.addEventListener('contextmenu', (event) => {
             event.preventDefault();
         });
-
-        // Show the first slide initially
-        showSlide(currentSlide);
     </script>
 </body>
 </html>
